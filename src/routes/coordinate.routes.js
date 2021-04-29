@@ -5,7 +5,7 @@ const {
   updateCoordinate,
   deleteCoordinate,
   getCoordinate,
-} =  require("../controllers/user.controller");
+} =  require("../controllers/coordinate.controller");
 
 
 // Routes
