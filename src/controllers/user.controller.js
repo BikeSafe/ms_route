@@ -29,6 +29,34 @@ userCtrl.userExists = async (req, res, next) => {
   }
 };
 
+userCtrl.userNotExists = async (req, res, next) => {
+  try {
+    const { id2 } = req.body;
+    if (!id2)
+      throw "The required data is incomplete";
+
+    // * if user NOT exists -> next() -> create new User
+    await User.findOne({"id2": id2}, function (error, docs) {
+      if(docs == null)
+        return res.status(400).json({
+          message: "The user not exists"
+        });
+      else
+        return next();
+    });
+
+  } catch (err) {
+    if (!err.message) {
+      return res.status(400).json({ message: err });
+    } else {
+      return res.status(400).json({
+        message: "Error verifying the existence of the user."
+      });
+    }
+  }
+};
+
+
 userCtrl.addUser = async (req, res, next) => {
   try {
     const { id2, name } = req.body;

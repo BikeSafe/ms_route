@@ -25,7 +25,27 @@ routeCtrl.addRoute = async (req, res, next) => {
   }
 };
 
-route.qualifyRoute = async (req, res, next) => {
+// ! improve - find nearby routes
+routeCtrl.getPublicRoutes = async (req, res, next) => {
+  try {
+
+    console.log("LLEGA");
+    const routes = await Route.find({public: true});
+
+    return res.status(200).json(routes);
+  } catch (err) {
+    if (!err.message) {
+      return res.status(400).json({ message: err });
+    } else {
+      return res.status(400).json({
+        message: "Route search error."
+      });
+    }
+  }
+};
+
+// ! improve grading method
+routeCtrl.qualifyRoute = async (req, res, next) => {
   try {
     const { routeId, rating } = req.body;
 
@@ -63,7 +83,7 @@ routeCtrl.addMember = async (req, res, next) => {
 
     var route = await Route.findById(routeId);
     if (route.memberId2s.includes(id2))
-      return res.status(200).json({
+      return res.status(400).json({
         message: "You are already a member of this route."
       })
 
@@ -84,29 +104,34 @@ routeCtrl.addMember = async (req, res, next) => {
   }
 };
 
-routeCtrl.updateRoute =  async (req, res, next) => {
+routeCtrl.removeMember = async (req, res, next) => {
   try {
-    const { routeId, lat, lng } = req.body;
+    const { routeId, id2 } = req.body;
 
-    if (!routeId)
+    if (!routeId || !id2)
       throw "The required data is incomplete";
 
     var route = await Route.findById(routeId);
-    if(lat)
-      route.lat = lat;
-    if(lng)
-      route.lng = lng;
+    const position = route.memberId2s.findIndex(el => el === id2);
+
+    if (position < 0)
+      return res.status(400).json({
+        message: "The user is not a member of the route."
+      })
+
+    route.memberId2s.splice(position, 1);
+
     await Route.findByIdAndUpdate(routeId, route);
 
     return res.status(200).json({
-      message: "The route has been updated successfully",
-    });
+      message: "The user has been successfully removed from the route."
+    })
   } catch (err) {
     if (!err.message) {
       return res.status(400).json({ message: err });
     } else {
       return res.status(400).json({
-        message: "The route does not exist",
+        message: "Path members update failed."
       });
     }
   }
@@ -114,7 +139,8 @@ routeCtrl.updateRoute =  async (req, res, next) => {
 
 routeCtrl.deleteRoute = async (req, res, next) => {
   try {
-    const { routeId } = req.body;
+    console.log(req.params);
+    const { routeId } = req.params;
 
     if (!routeId)
       throw "The required data is incomplete";
@@ -137,7 +163,8 @@ routeCtrl.deleteRoute = async (req, res, next) => {
 
 routeCtrl.getRoute = async (req, res, next) => {
   try {
-    const { routeId } = req.body;
+    console.log(req.params);
+    const { routeId } = req.params;
 
     if (!routeId)
       throw "The required data is incomplete";
