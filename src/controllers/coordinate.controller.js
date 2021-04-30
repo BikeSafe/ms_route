@@ -28,12 +28,14 @@ coordinateCtrl.updateCoordinate =  async (req, res, next) => {
   try {
     const { coordinateId, lat, lng } = req.body;
 
-    if (!coordinateId || !lat || !lng)
+    if (!coordinateId)
       throw "The required data is incomplete";
 
     var coordinate = await Coordinate.findById(coordinateId);
-    coordinate.lat = lat;
-    coordinate.lng = lng;
+    if(lat)
+      coordinate.lat = lat;
+    if(lng)
+      coordinate.lng = lng;
     await Coordinate.findByIdAndUpdate(coordinateId, coordinate);
 
     return res.status(200).json({

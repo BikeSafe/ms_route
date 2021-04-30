@@ -4,7 +4,7 @@ then
 
   curl -i -H "Content-Type:application/json" -X \
   POST http://localhost:4003/user -d \
-  '{"name":"Pepita", "id2": 8}'
+  '{"name":"Pepita", "id2": 1}'
 
 elif [[ $1 == "GET" ]]
 then
@@ -43,8 +43,7 @@ else
   printf "\nOptions:\
   \nPOST\
   \nGET\
-  \nGET id\
-  \nPUT id\
-  \nDELETE id\n\n"
+  \nPUT\
+  \nDELETE\n"
 
 fi

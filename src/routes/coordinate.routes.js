@@ -1,11 +1,12 @@
 const { Router } = require("express");
 const router = Router();
+
 const {
   addCoordinate,
   updateCoordinate,
   deleteCoordinate,
   getCoordinate,
-} =  require("../controllers/user.controller");
+} =  require("../controllers/coordinate.controller");
 
 
 // Routes
