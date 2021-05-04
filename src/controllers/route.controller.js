@@ -140,7 +140,7 @@ routeCtrl.removeMember = async (req, res, next) => {
 routeCtrl.deleteRoute = async (req, res, next) => {
   try {
     console.log(req.params);
-    const { routeId } = req.params;
+    const { routeId } = req.body;
 
     if (!routeId)
       throw "The required data is incomplete";
@@ -163,8 +163,7 @@ routeCtrl.deleteRoute = async (req, res, next) => {
 
 routeCtrl.getRoute = async (req, res, next) => {
   try {
-    console.log(req.params);
-    const { routeId } = req.params;
+    const { routeId } = req.body;
 
     if (!routeId)
       throw "The required data is incomplete";

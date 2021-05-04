@@ -19,7 +19,7 @@ router.post("", addRoute);
 
 router.get("/public", getPublicRoutes);
 
-router.get("/:routeId", getRoute);
+router.get("/", getRoute);
 
 router.put("/qualify", qualifyRoute);
 
@@ -27,6 +27,6 @@ router.put("/add-member", userNotExists, addMember);
 
 router.put("/remove-member", userNotExists, removeMember);
 
-router.delete("/:routeId", deleteRoute);
+router.delete("/", deleteRoute);
 
 module.exports = router;;
