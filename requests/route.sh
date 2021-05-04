@@ -15,7 +15,8 @@ then
   printf "\nGET route\n\n"
 
   curl -i -H "Content-Type:application/json" -X \
-  GET http://localhost:4003/route/$2
+  GET http://localhost:4003/route/ -d \
+  '{ "routeId":"60911c9fb5fa0f08d1132ce4"}'
 
   printf "\n\n"
 
@@ -25,7 +26,8 @@ then
   printf "\nGET route\n\n"
 
   curl -i -H "Content-Type:application/json" -X \
-  GET http://localhost:4003/route/public
+  GET http://localhost:4003/route/public -d \
+  '{ "routeId":"60911c9fb5fa0f08d1132ce4"}'
 
   printf "\n\n"
 
@@ -37,7 +39,7 @@ then
   curl -i -H "Content-Type:application/json" -X \
   PUT http://localhost:4003/route/qualify -d \
   '{
-      "routeId":"608b4b778372ae00316b961d",
+      "routeId":"60911c9fb5fa0f08d1132ce4",
       "rating": 5
    }'
   printf "\n\n"
@@ -50,7 +52,7 @@ then
   curl -i -H "Content-Type:application/json" -X \
   PUT http://localhost:4003/route/add-member -d \
   '{
-      "routeId":"608b4b778372ae00316b961d",
+      "routeId":"60911c9fb5fa0f08d1132ce4",
       "id2": 1
    }'
   printf "\n\n"
@@ -63,7 +65,7 @@ then
   curl -i -H "Content-Type:application/json" -X \
   PUT http://localhost:4003/route/remove-member -d \
   '{
-      "routeId":"608b4b778372ae00316b961d",
+      "routeId":"60911c9fb5fa0f08d1132ce4",
       "id2": 1
    }'
   printf "\n\n"
@@ -74,7 +76,8 @@ then
   printf "\nDELETE route\n\n"
 
   curl -i -H "Content-Type:application/json" -X \
-  DELETE http://localhost:4003/route/$2
+  DELETE http://localhost:4003/route/ -d \
+  '{ "routeId":"60911c9fb5fa0f08d1132ce4"}'
 
   printf "\n\n"
 
@@ -82,11 +85,11 @@ else
 
   printf "\nOptions:\
   \nPOST\
-  \nGET :routeId\
+  \nGET\
   \nPUBLIC\
   \nQUALIFY\
   \nADDMEMBER\
   \nDELMEMBER\
-  \nDELETE :routeId\n\n"
+  \nDELETE\n\n"
 
 fi
